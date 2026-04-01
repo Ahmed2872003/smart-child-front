@@ -1646,7 +1646,7 @@ const ReportsDashboard = () => {
       </div>
 
       {selectedHistoryItem && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm animate-in fade-in duration-200 no-print">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm animate-in fade-in duration-200">
           <div
             className={`${THEME.cardWhite} w-full max-w-lg p-8 relative animate-in zoom-in-95 duration-200 max-h-[90vh] overflow-y-auto`}
           >
@@ -1740,18 +1740,18 @@ const ReportsDashboard = () => {
       )}
 
       {activePrintReport && (
-        <div className="fixed inset-0 z-50 bg-gray-500/50 backdrop-blur-sm overflow-y-auto no-print">
+        <div className="fixed inset-0 z-50 bg-gray-500/50 backdrop-blur-sm overflow-y-auto print:bg-transparent print:static">
           <div className="min-h-full flex justify-center items-start p-4 sm:p-10">
             <div className="fixed top-4 right-4 flex gap-3 z-[60]">
               <button
                 onClick={() => window.print()}
-                className="bg-blue-600 text-white font-bold px-6 py-3 rounded-full shadow-lg flex items-center gap-2 hover:bg-blue-700"
+                className="bg-blue-600 text-white font-bold px-6 py-3 rounded-full shadow-lg flex items-center gap-2 hover:bg-blue-700 no-print"
               >
                 <Printer size={20} /> Print PDF
               </button>
               <button
                 onClick={() => setActivePrintReport(null)}
-                className="bg-white text-gray-600 font-bold p-3 rounded-full shadow-lg hover:bg-gray-100"
+                className="bg-white text-gray-600 font-bold p-3 rounded-full shadow-lg hover:bg-gray-100 no-print"
               >
                 <X size={20} />
               </button>
