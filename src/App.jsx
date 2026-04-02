@@ -18,10 +18,12 @@ import ForgotPassword from "./views/Auth/ForgotPassword";
 import VerifyEmail from "./views/Auth/VerifyEmail";
 import ResetPassword from "./views/Auth/ResetPassword";
 
+const basename = import.meta.env.VITE_URL_BASENAME;
+
 export default function App() {
   return (
     <AppContextProvider>
-      <Router>
+      <Router basename={basename || "/"}>
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/parent-dashboard" element={<ParentDashboard />} />
