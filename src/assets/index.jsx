@@ -1,23 +1,31 @@
-import { Puzzle } from "lucide-react";
+import heroImage from "@/assets/images/home.png";
+import logo from "@/assets/images/logo.png";
+import flower from "@/assets/images/flower.png";
+import doubleHeart from "@/assets/images/doubleHeart.png";
+import star from "@/assets/images/star.png";
+import sun from "@/assets/images/sun.png";
+import forParents from "@/assets/images/forParents.png";
+import auth from "@/assets/images/auth.png";
+import memoryTest from "@/assets/images/memoryTest.jpg";
+import reactionSpeedTest from "@/assets/images/reactionSpeedTest.jpg";
+import colorTest from "@/assets/images/colorTest.jpg";
+import hearingTest from "@/assets/images/hearingTest.jpg";
+import drawingTest from "@/assets/images/drawingTest.jpg";
 
 const ASSETS = {
-  logo: (
-    <div className="flex flex-col items-center justify-center">
-      <div className="flex -space-x-1 mb-1">
-        <div className="w-8 h-8 bg-blue-400 rounded-lg flex items-center justify-center text-white transform -rotate-6">
-          <Puzzle size={18} />
-        </div>
-        <div className="w-8 h-8 bg-pink-400 rounded-lg flex items-center justify-center text-white transform rotate-6">
-          <Puzzle size={18} />
-        </div>
-      </div>
-      <span className="text-[10px] font-black tracking-widest text-slate-800">
-        SMARTCHILD
-      </span>
-    </div>
-  ),
-  heroImage:
-    "https://images.unsplash.com/photo-1587654780291-39c9404d746b?auto=format&fit=crop&q=80&w=1000",
+  auth,
+  logo,
+  heroImage,
+  flower,
+  doubleHeart,
+  star,
+  sun,
+  forParents,
+  memoryTest,
+  reactionSpeedTest,
+  colorTest,
+  hearingTest,
+  drawingTest,
   avatars: {
     child1:
       "https://api.dicebear.com/7.x/micah/svg?seed=Felix&backgroundColor=b6e3f4",

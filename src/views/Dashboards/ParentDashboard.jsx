@@ -165,8 +165,8 @@ const ParentDashboard = () => {
         </div>
       )}
 
-      <header className="bg-[#FFFDF8] px-8 py-5 flex items-center justify-between sticky top-0 z-10">
-        {ASSETS.logo}
+      <header className="bg-[#FFFDF8]  flex items-center justify-between  top-0  px-6 md:px-12 py-6 max-w-7xl mx-auto sticky z-50">
+        <img className="w-16 " src={ASSETS.logo} alt="smart-child-logo" />
         <div className="flex items-center gap-5">
           <button
             onClick={() => navigate("/")}

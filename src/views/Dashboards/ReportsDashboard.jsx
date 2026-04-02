@@ -53,7 +53,7 @@ const ReportsDashboard = () => {
     <div className={`min-h-screen ${THEME.bgBeige} relative`}>
       <style>{`@media print { body { background-color: white !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; } .no-print { display: none !important; } @page { margin: 15mm; size: A4 portrait; } }`}</style>
       <div className={`no-print ${activePrintReport ? "hidden" : "block"}`}>
-        <header className="bg-[#FFFDF8] px-8 py-5 flex items-center justify-between sticky top-0 z-10 border-b border-gray-100">
+        <header className="bg-[#FFFDF8]  flex items-center justify-between  top-0  px-6 md:px-12 py-6 max-w-7xl mx-auto sticky z-50">
           <div className="flex items-center gap-4">
             <button
               onClick={() => navigate("/parent-dashboard")}
@@ -61,7 +61,7 @@ const ReportsDashboard = () => {
             >
               <ArrowLeft size={20} />
             </button>
-            <div className="scale-90 origin-left">{ASSETS.logo}</div>
+            <img src={ASSETS.logo} alt="logo" className="w-16" />
           </div>
           <div
             className="flex items-center gap-3 cursor-pointer"
@@ -338,9 +338,7 @@ const ReportsDashboard = () => {
                 <div className="p-6 sm:p-10 print:p-0">
                   <div className="flex flex-col sm:flex-row justify-between items-start gap-6 border-b-2 border-gray-200 pb-8 mb-8 print:flex-row">
                     <div>
-                      <div className="scale-110 origin-top-left mb-6">
-                        {ASSETS.logo}
-                      </div>
+                      <img src={ASSETS.logo} alt="logo" className="w-16" />
                       <h1 className="text-4xl sm:text-5xl font-black text-gray-900 tracking-tight">
                         Comprehensive Progress Report
                       </h1>
@@ -452,9 +450,11 @@ const ReportsDashboard = () => {
                       <>
                         <div className="flex flex-col sm:flex-row justify-between items-start gap-6 border-b-2 border-gray-200 pb-8 mb-8 print:flex-row">
                           <div>
-                            <div className="scale-110 origin-top-left mb-6">
-                              {ASSETS.logo}
-                            </div>
+                            <img
+                              src={ASSETS.logo}
+                              alt="logo"
+                              className="w-16"
+                            />
                             <h1 className="text-4xl sm:text-5xl font-black text-gray-900 tracking-tight">
                               Assessment Result
                             </h1>

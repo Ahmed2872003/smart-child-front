@@ -16,7 +16,7 @@ const LandingPage = () => {
     >
       {/* NAVIGATION */}
       <nav className="flex items-center justify-between px-6 md:px-12 py-6 max-w-7xl mx-auto bg-transparent relative z-50">
-        <div className="scale-110">{ASSETS.logo}</div>
+        <img className="w-16 " src={ASSETS.logo} alt="smart-child-logo" />
         <div className="hidden md:flex gap-10 font-bold text-gray-800 text-sm">
           <a
             href="#"
@@ -72,20 +72,6 @@ const LandingPage = () => {
 
       {/* HERO SECTION */}
       <section className="flex flex-col-reverse md:flex-row items-center max-w-7xl mx-auto px-6 md:px-12 py-12 md:py-20 gap-12 bg-white relative">
-        <div className="absolute top-0 right-[20%] text-yellow-400 opacity-60 z-0">
-          <svg
-            width="120"
-            height="120"
-            viewBox="0 0 100 100"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="4"
-            strokeLinecap="round"
-          >
-            <path d="M50 10 L50 20 M50 80 L50 90 M10 50 L20 50 M80 50 L90 50 M22 22 L29 29 M71 71 L78 78 M22 78 L29 71 M71 22 L78 29" />
-          </svg>
-        </div>
-
         <div className="flex-1 space-y-6 text-center md:text-left z-10">
           <h1 className="text-5xl md:text-[5.5rem] font-black text-gray-900 leading-[1.05] tracking-tight">
             This Is Not Just <br /> a Game.
@@ -107,27 +93,11 @@ const LandingPage = () => {
         </div>
         <div className="flex-1 relative flex justify-center w-full min-h-[400px]">
           <div className="w-full max-w-md aspect-square relative mt-8">
-            <div className="absolute -right-6 top-0 text-[#22c55e] text-[14rem] font-black rotate-12 leading-none z-0 select-none">
-              3
-            </div>
-            <svg
-              className="absolute -left-16 top-1/4 w-40 h-40 text-[#ec4899] z-20"
-              viewBox="0 0 100 100"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="12"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M10,50 Q20,20 40,50 T70,50 T90,20" />
-            </svg>
-            <div className="w-full h-full rounded-full overflow-hidden shadow-xl relative z-10 border-[12px] border-white">
-              <img
-                src={ASSETS.heroImage}
-                className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700"
-                alt="Child playing"
-              />
-            </div>
+            <img
+              src={ASSETS.heroImage}
+              className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700"
+              alt="Child playing"
+            />
           </div>
         </div>
       </section>
@@ -141,54 +111,37 @@ const LandingPage = () => {
           <h2 className="text-4xl md:text-5xl font-black mb-16 tracking-tight text-gray-900">
             How it <span className="text-white drop-shadow-sm">Works</span>
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-            <div className="bg-[#ff5e5e] p-8 rounded-3xl shadow-sm text-white flex flex-col items-center text-center hover:-translate-y-2 transition-transform">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:min-h-90 md:grid-cols-4 gap-6">
+            <div className="bg-[#ff5e5e] p-4 rounded-3xl shadow-sm text-white flex flex-col justify-center items-center text-center hover:-translate-y-2 transition-transform">
               <div className="w-16 h-16 mb-4 flex items-center justify-center">
-                <Sparkles
-                  size={48}
-                  fill="currentColor"
-                  className="text-yellow-300"
-                />
+                <img src={ASSETS.flower} alt="flower" className="w-11" />
               </div>
               <h3 className="text-xl font-bold mb-3">Create an Account</h3>
               <p className="text-white/90 text-sm font-medium leading-relaxed">
                 Sign up as a parent and set up your profile.
               </p>
             </div>
-            <div className="bg-[#ec4899] p-8 rounded-3xl shadow-sm text-white flex flex-col items-center text-center hover:-translate-y-2 transition-transform">
+            <div className="bg-[#ec4899] p-4 rounded-3xl shadow-sm text-white flex flex-col justify-center items-center text-center hover:-translate-y-2 transition-transform">
               <div className="w-16 h-16 mb-4 flex items-center justify-center relative">
-                <Heart
-                  size={40}
-                  fill="currentColor"
-                  className="text-green-300 absolute -left-2 top-2"
-                />
-                <Heart
-                  size={48}
-                  fill="currentColor"
-                  className="text-yellow-300 relative z-10"
-                />
+                <img src={ASSETS.doubleHeart} alt="double-heart" />
               </div>
               <h3 className="text-xl font-bold mb-3">Add Your Child</h3>
               <p className="text-white/90 text-sm font-medium leading-relaxed">
                 Create a secure profile for each child.
               </p>
             </div>
-            <div className="bg-[#86D293] p-8 rounded-3xl shadow-sm text-white flex flex-col items-center text-center hover:-translate-y-2 transition-transform">
+            <div className="bg-[#86D293] p-4 rounded-3xl shadow-sm text-white flex flex-col justify-center items-center text-center hover:-translate-y-2 transition-transform">
               <div className="w-16 h-16 mb-4 flex items-center justify-center">
-                <Sun size={48} fill="currentColor" className="text-red-500" />
+                <img src={ASSETS.star} alt="star" />
               </div>
               <h3 className="text-xl font-bold mb-3">Play Tests</h3>
               <p className="text-white/90 text-sm font-medium leading-relaxed">
                 Your child enjoys interactive games (tests) effortlessly.
               </p>
             </div>
-            <div className="bg-[#60A5FA] p-8 rounded-3xl shadow-sm text-white flex flex-col items-center text-center hover:-translate-y-2 transition-transform">
+            <div className="bg-[#60A5FA] p-4 rounded-3xl shadow-sm text-white flex flex-col justify-center items-center text-center hover:-translate-y-2 transition-transform">
               <div className="w-16 h-16 mb-4 flex items-center justify-center">
-                <Sun
-                  size={48}
-                  fill="currentColor"
-                  className="text-yellow-300"
-                />
+                <img src={ASSETS.sun} alt="sun" />
               </div>
               <h3 className="text-xl font-bold mb-3">Get Reports</h3>
               <p className="text-white/90 text-sm font-medium leading-relaxed">
@@ -233,12 +186,9 @@ const LandingPage = () => {
             <div className="absolute top-0 right-12 text-yellow-400 opacity-80 z-20">
               <Sun size={48} />
             </div>
-            <div
-              className="w-full max-w-sm aspect-square relative z-10 overflow-hidden shadow-xl border-8 border-white bg-gray-200"
-              style={{ borderRadius: "50% 50% 10% 10% / 40% 40% 10% 10%" }}
-            >
+            <div className="w-full max-w-sm relative z-10">
               <img
-                src="https://images.unsplash.com/photo-1543269664-76bc3997d9ea?auto=format&fit=crop&q=80&w=800"
+                src={ASSETS.forParents}
                 className="w-full h-full object-cover"
                 alt="Parent and child playing"
               />
@@ -246,10 +196,162 @@ const LandingPage = () => {
           </div>
         </div>
       </section>
+      <section
+        id="assessments"
+        className="w-full bg-[#FFD95A] py-24 px-6 md:px-12"
+      >
+        <div className="max-w-7xl mx-auto text-center">
+          <h2 className="text-4xl md:text-5xl font-black mb-16 tracking-tight text-gray-900">
+            Assessments
+          </h2>
+
+          <div className="flex flex-wrap xl:flex-nowrap justify-center gap-6">
+            {/* Memory Test Card */}
+            <div className="bg-white rounded-3xl overflow-hidden shadow-sm w-full max-w-[260px] flex flex-col text-left hover:-translate-y-2 transition-transform">
+              <div className="h-40 bg-gray-100 w-full overflow-hidden p-4 flex justify-center items-center">
+                <img
+                  src={ASSETS.memoryTest}
+                  className="w-full h-full object-cover rounded-2xl"
+                  alt="Cards"
+                />
+              </div>
+              <div className="p-6 flex flex-col flex-1">
+                <h3 className="text-xl font-black text-gray-900 mb-2">
+                  Memory Test
+                </h3>
+                <p className="text-gray-500 text-sm mb-6 flex-1">
+                  Test recall and matching capabilities by uncovering hidden
+                  card pairs.
+                </p>
+                <button
+                  onClick={() =>
+                    navigate(isLoggedIn ? "parent-dashboard" : "register")
+                  }
+                  className="w-full bg-[#FFC82C] text-black font-bold py-3 rounded-full hover:bg-yellow-400 transition-colors"
+                >
+                  Learn More
+                </button>
+              </div>
+            </div>
+
+            {/* Reaction Speed Card */}
+            <div className="bg-white rounded-3xl overflow-hidden shadow-sm w-full max-w-[260px] flex flex-col text-left hover:-translate-y-2 transition-transform">
+              <div className="h-40 bg-gray-100 w-full overflow-hidden p-4 flex justify-center items-center">
+                <img
+                  src={ASSETS.reactionSpeedTest}
+                  className="w-full h-full object-cover rounded-2xl"
+                  alt="Child reacting"
+                />
+              </div>
+              <div className="p-6 flex flex-col flex-1">
+                <h3 className="text-xl font-black text-gray-900 mb-2">
+                  Reaction Speed
+                </h3>
+                <p className="text-gray-500 text-sm mb-6 flex-1">
+                  Engages the child to tap swiftly to track alertness and
+                  attention.
+                </p>
+                <button
+                  onClick={() =>
+                    navigate(isLoggedIn ? "parent-dashboard" : "register")
+                  }
+                  className="w-full bg-[#FFC82C] text-black font-bold py-3 rounded-full hover:bg-yellow-400 transition-colors"
+                >
+                  Learn More
+                </button>
+              </div>
+            </div>
+
+            {/* Color Explorer Card */}
+            <div className="bg-white rounded-3xl overflow-hidden shadow-sm w-full max-w-[260px] flex flex-col text-left hover:-translate-y-2 transition-transform">
+              <div className="h-40 bg-gray-100 w-full overflow-hidden p-4 flex justify-center items-center">
+                <div className="h-40 bg-gray-100 w-full overflow-hidden p-4 flex justify-center items-center">
+                  <img
+                    src={ASSETS.colorTest}
+                    className="w-full h-full object-cover rounded-2xl"
+                    alt="Child reacting"
+                  />
+                </div>
+              </div>
+              <div className="p-6 flex flex-col flex-1">
+                <h3 className="text-xl font-black text-gray-900 mb-2">
+                  Color Explorer Test
+                </h3>
+                <p className="text-gray-500 text-sm mb-6 flex-1">
+                  Identify patterns, shapes and tests levels of color vision.
+                </p>
+                <button
+                  onClick={() =>
+                    navigate(isLoggedIn ? "parent-dashboard" : "register")
+                  }
+                  className="w-full bg-[#FFC82C] text-black font-bold py-3 rounded-full hover:bg-yellow-400 transition-colors"
+                >
+                  Learn More
+                </button>
+              </div>
+            </div>
+
+            {/* Hearing Test Card */}
+            <div className="bg-white rounded-3xl overflow-hidden shadow-sm w-full max-w-[260px] flex flex-col text-left hover:-translate-y-2 transition-transform">
+              <div className="h-40 bg-gray-100 w-full overflow-hidden p-4 flex justify-center items-center">
+                <img
+                  src={ASSETS.hearingTest}
+                  className="w-full h-full object-cover rounded-2xl"
+                  alt="Listening"
+                />
+              </div>
+              <div className="p-6 flex flex-col flex-1">
+                <h3 className="text-xl font-black text-gray-900 mb-2">
+                  Hearing Test
+                </h3>
+                <p className="text-gray-500 text-sm mb-6 flex-1">
+                  Listen carefully and recognize different external real life
+                  sounds.
+                </p>
+                <button
+                  onClick={() =>
+                    navigate(isLoggedIn ? "parent-dashboard" : "register")
+                  }
+                  className="w-full bg-[#FFC82C] text-black font-bold py-3 rounded-full hover:bg-yellow-400 transition-colors"
+                >
+                  Learn More
+                </button>
+              </div>
+            </div>
+            {/* Free Drawing Card */}
+            <div className="bg-white rounded-3xl overflow-hidden shadow-sm w-full max-w-[260px] flex flex-col text-left hover:-translate-y-2 transition-transform">
+              <div className="h-40 bg-gray-100 w-full overflow-hidden p-4 flex justify-center items-center">
+                <img
+                  src={ASSETS.drawingTest}
+                  className="w-full h-full object-cover rounded-2xl"
+                  alt="Drawing"
+                />
+              </div>
+              <div className="p-6 flex flex-col flex-1">
+                <h3 className="text-xl font-black text-gray-900 mb-2">
+                  Free Drawing
+                </h3>
+                <p className="text-gray-500 text-sm mb-6 flex-1">
+                  Encourages creative expression and fine motor skills and
+                  creativity.
+                </p>
+                <button
+                  onClick={() =>
+                    navigate(isLoggedIn ? "parent-dashboard" : "register")
+                  }
+                  className="w-full bg-[#FFC82C] text-black font-bold py-3 rounded-full hover:bg-yellow-400 transition-colors"
+                >
+                  Learn More
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* FOOTER */}
       <footer className="bg-white py-16 px-6 border-t border-gray-100 flex flex-col items-center text-center">
-        <div className="mb-6">{ASSETS.logo}</div>
+        <img className="mb-6 w-20" src={ASSETS.logo} alt="smart-child-logo" />
         <p className="text-gray-600 font-bold mb-8">
           Helps you to discover your child's hidden talents
         </p>
@@ -273,6 +375,14 @@ const LandingPage = () => {
           >
             <InstagramIcon size={18} />
           </a>
+        </div>
+        <div className="w-full flex justify-center items-center gap-6 mb-7">
+          <button
+            type="submit"
+            className={`py-2 w-[35%] sm:w-[20%]  ${THEME.primaryYellow} ${THEME.textBlack} font-bold rounded-full ${THEME.primaryYellowHover} transition-colors text-sm`}
+          >
+            Contact Us
+          </button>
         </div>
 
         <div className="text-sm text-gray-400 font-medium">

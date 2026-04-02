@@ -7,11 +7,11 @@ import { ASSETS } from "../assets/index";
 const AuthLayout = ({ children, onBack }) => (
   <div className={`min-h-screen ${THEME.bgBeige} flex`}>
     <div className="hidden md:block md:w-1/2 relative">
-      <div className="absolute top-8 left-8 z-10 bg-white/90 p-2 rounded-2xl backdrop-blur-sm shadow-sm">
-        {ASSETS.logo}
+      <div className="absolute w-30 h-29 rounded-full top-8 left-8 z-10 flex justify-center items-center bg-white/90 backdrop-blur-sm shadow-sm">
+        <img src={ASSETS.logo} alt="logo" className="w-22" />
       </div>
       <img
-        src={ASSETS.heroImage}
+        src={ASSETS.auth}
         alt="Child playing"
         className="absolute inset-0 w-full h-full object-cover"
       />
