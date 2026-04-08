@@ -37,9 +37,23 @@ const useAuth = () => {
     },
   });
 
+  const forgotPassMutation = useMutation({
+    mutationFn: authService.forgotPass,
+  });
+
+  const resetPassMutation = useMutation({
+    mutationFn: ({ data, token }) => authService.resetPass(data, token),
+    onSuccess: (res) => {
+      toast.success("Password changed");
+      navigate("/login");
+    },
+  });
+
   return {
     login: loginMutation,
     signup: signupMutation,
+    forgotPass: forgotPassMutation,
+    resetPass: resetPassMutation,
   };
 };
 

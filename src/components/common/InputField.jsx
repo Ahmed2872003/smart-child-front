@@ -1,4 +1,4 @@
-import React, { forwardRef } from "react";
+import { forwardRef } from "react";
 
 const InputField = forwardRef(
   (
@@ -14,7 +14,7 @@ const InputField = forwardRef(
       onAction,
       disabled,
       required,
-      error, // Added error prop
+      error,
       ...other
     },
     ref,

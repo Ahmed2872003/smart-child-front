@@ -12,7 +12,7 @@ const Login = () => {
   const navigate = useNavigate();
   const { setParentData } = useAppContext();
   const { login } = useAuth();
-  const { handleSubmit, register } = useForm();
+  const { handleSubmit, register, getValues: getFormData } = useForm();
   console.log("render");
 
   const handleLogin = (data) => {
@@ -43,7 +43,11 @@ const Login = () => {
           {...register("email")}
           icon={Mail}
           actionLabel="Forget password?"
-          onAction={() => navigate("/forgot-password")}
+          onAction={() =>
+            navigate("/forgot-password", {
+              state: { email: getFormData("email") },
+            })
+          }
         />
         <InputField
           type="password"

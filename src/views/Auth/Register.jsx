@@ -77,6 +77,7 @@ const Register = () => {
         />
         <button
           type="submit"
+          disabled={signup.isPending}
           className={`w-full mt-4 ${THEME.primaryYellow} ${THEME.textBlack} font-bold py-4 px-4 rounded-full ${THEME.primaryYellowHover} transition-colors text-lg flex justify-center items-center gap-2`}
         >
           Sign up

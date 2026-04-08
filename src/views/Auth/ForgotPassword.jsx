@@ -2,13 +2,32 @@ import InputField from "@/components/common/InputField";
 import { IS_DEV, THEME } from "@/constants/config";
 import { Lock, Mail } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+
+import { useForm } from "react-hook-form";
+
+import useAuth from "@/hooks/useAuth";
+
+const timeDuration = 60;
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
+
+  const {
+    state: { email },
+  } = useLocation();
+
   const [isSent, setIsSent] = useState(false);
-  const [email, setEmail] = useState("");
-  const [timeLeft, setTimeLeft] = useState(60);
+
+  const {
+    register,
+    handleSubmit,
+    getValues: getFormData,
+  } = useForm({ defaultValues: { email } });
+
+  const [timeLeft, setTimeLeft] = useState(timeDuration);
+
+  const { forgotPass } = useAuth();
 
   useEffect(() => {
     if (isSent && timeLeft > 0) {
@@ -16,6 +35,16 @@ const ForgotPassword = () => {
       return () => clearTimeout(timer);
     }
   }, [isSent, timeLeft]);
+
+  const forgotPassSubmit = async (data) => {
+    try {
+      await forgotPass.mutateAsync(data);
+
+      setIsSent(true);
+    } catch (err) {
+      // console.error(err);
+    }
+  };
 
   if (isSent) {
     return (
@@ -29,7 +58,7 @@ const ForgotPassword = () => {
         <p className="text-gray-500 mb-6 font-medium leading-relaxed">
           If an account exists for{" "}
           <span className="font-bold text-gray-800">
-            {email || "that address"}
+            {getFormData("email") || "that address"}
           </span>
           , we have sent a password reset link.
         </p>
@@ -49,7 +78,10 @@ const ForgotPassword = () => {
             </span>
           ) : (
             <button
-              onClick={() => setTimeLeft(60)}
+              onClick={() => {
+                setTimeLeft(timeDuration);
+                forgotPassSubmit(getFormData());
+              }}
               className="text-black underline decoration-2 underline-offset-4 hover:text-[#FFC82C] transition-colors mt-2"
             >
               Resend now
@@ -87,23 +119,18 @@ const ForgotPassword = () => {
         Enter your email address and we'll send you a link to reset your
         password.
       </p>
-      <form
-        className="space-y-3"
-        onSubmit={(e) => {
-          e.preventDefault();
-          setIsSent(true);
-        }}
-      >
+      <form className="space-y-3" onSubmit={handleSubmit(forgotPassSubmit)}>
         <InputField
           type="email"
           placeholder="Email Address"
+          disabled={forgotPass.isPending}
+          {...register("email")}
           icon={Mail}
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
           required
         />
         <button
           type="submit"
+          disabled={forgotPass.isPending}
           className={`w-full mt-4 ${THEME.primaryYellow} ${THEME.textBlack} font-bold py-4 px-4 rounded-full ${THEME.primaryYellowHover} transition-colors text-lg`}
         >
           Send Reset Link

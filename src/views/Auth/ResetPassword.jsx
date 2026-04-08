@@ -1,31 +1,29 @@
 import InputField from "@/components/common/InputField";
 import { THEME } from "@/constants/config";
 import { Lock } from "lucide-react";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { useForm } from "react-hook-form";
+
+import useAuth from "@/hooks/useAuth";
 
 const ResetPassword = () => {
-  const navigate = useNavigate();
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [error, setError] = useState("");
+  const { token } = useParams();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (password !== confirmPassword) {
-      setError("Passwords do not match");
-      return;
-    }
-    setError("");
-    setIsSubmitting(true);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    getValues: getFormData,
+  } = useForm();
 
-    // Simulate API delay
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+  const { resetPass } = useAuth();
 
-    setIsSubmitting(false);
-    navigate("/login");
+  const handleResetPass = (data) => {
+    resetPass.mutate({ data, token });
   };
+
+  const validatePasswords = (pass, confirmPass) =>
+    pass === confirmPass || "Passwords do not match";
 
   return (
     <div className="text-center animate-in fade-in duration-500">
@@ -39,40 +37,40 @@ const ResetPassword = () => {
         Please enter your new password below.
       </p>
 
-      <form className="space-y-3" onSubmit={handleSubmit}>
+      <form className="space-y-3" onSubmit={handleSubmit(handleResetPass)}>
         <InputField
           type="password"
           placeholder="New Password"
+          {...register("password", {
+            validate: (value) =>
+              validatePasswords(value, getFormData("passwordConfirm")),
+            deps: ["passwordConfirm"],
+          })}
           icon={Lock}
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
           required
-          disabled={isSubmitting}
+          disabled={resetPass.isPending}
+          error={errors.password?.message}
         />
         <InputField
           type="password"
           placeholder="Re-enter Password"
+          {...register("passwordConfirm", {
+            validate: (value) =>
+              validatePasswords(getFormData("password"), value),
+            deps: ["password"],
+          })}
           icon={Lock}
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
           required
-          disabled={isSubmitting}
+          disabled={resetPass.isPending}
+          error={errors.passwordConfirm?.message}
         />
-        {error && (
-          <p className="text-red-500 text-sm font-bold text-left px-4 -mt-2">
-            {error}
-          </p>
-        )}
 
         <button
           type="submit"
-          disabled={isSubmitting}
-          className={`w-full mt-4 ${THEME.primaryYellow} ${THEME.textBlack} font-bold py-4 px-4 rounded-full ${isSubmitting ? "opacity-70 cursor-not-allowed" : THEME.primaryYellowHover} transition-colors text-lg flex justify-center items-center gap-2`}
+          disabled={resetPass.isPending}
+          className={`w-full mt-4 ${THEME.primaryYellow} ${THEME.textBlack} font-bold py-4 px-4 rounded-full ${THEME.primaryYellowHover} transition-colors text-lg`}
         >
-          {isSubmitting ? (
-            <div className="w-5 h-5 border-2 border-black border-t-transparent rounded-full animate-spin"></div>
-          ) : null}
-          {isSubmitting ? "Saving..." : "Reset Password"}
+          Reset Password
         </button>
       </form>
     </div>
