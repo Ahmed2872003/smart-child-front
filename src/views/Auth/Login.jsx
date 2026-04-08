@@ -4,15 +4,21 @@ import { THEME } from "@/constants/config";
 import { useAppContext } from "@/context/AppContext";
 import { Lock, Mail } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+
+import useAuth from "@/hooks/useAuth";
 
 const Login = () => {
   const navigate = useNavigate();
   const { setParentData } = useAppContext();
+  const { login } = useAuth();
+  const { handleSubmit, register } = useForm();
+  console.log("render");
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    setParentData({ name: "Parent", email: "parent@smartchild.app" });
-    navigate("/parent-dashboard");
+  const handleLogin = (data) => {
+    login.mutate(data);
+
+    setParentData({ name: "Parent", email: "parent@smartchild.app" }); // will be removed after setting react query
   };
 
   return (
@@ -29,17 +35,26 @@ const Login = () => {
           Create an account
         </button>
       </div>
-      <form className="space-y-3" onSubmit={handleLogin}>
+      <form className="space-y-3" onSubmit={handleSubmit(handleLogin)}>
         <InputField
           type="email"
           placeholder="Email"
+          required={true}
+          {...register("email")}
           icon={Mail}
           actionLabel="Forget password?"
           onAction={() => navigate("/forgot-password")}
         />
-        <InputField type="password" placeholder="Password" icon={Lock} />
+        <InputField
+          type="password"
+          placeholder="Password"
+          required={true}
+          {...register("password")}
+          icon={Lock}
+        />
         <button
           type="submit"
+          disabled={login.isPending}
           className={`w-full mt-4 ${THEME.primaryYellow} ${THEME.textBlack} font-bold py-4 px-4 rounded-full ${THEME.primaryYellowHover} transition-colors text-lg`}
         >
           Log in

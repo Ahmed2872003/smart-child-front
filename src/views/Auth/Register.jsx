@@ -4,10 +4,27 @@ import { THEME } from "@/constants/config";
 import { Lock, Mail, User } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import useAuth from "@/hooks/useAuth";
 
 const Register = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
+
+  const {
+    handleSubmit,
+    register,
+    formState: { errors: formErrors },
+    ...form
+  } = useForm();
+
+  const { signup } = useAuth();
+
+  const handleSignup = (data) => {
+    signup.mutate(data);
+  };
+
+  const isMatch = (pass, confirmPass) => pass === confirmPass;
+
   return (
     <div className="text-center animate-in fade-in duration-500">
       <h2 className="text-3xl font-black text-gray-900 mb-2 tracking-tight">
@@ -16,27 +33,45 @@ const Register = () => {
       <p className="text-gray-500 mb-8 font-medium">
         Let's set up your parent dashboard.
       </p>
-      <form
-        className="space-y-3"
-        onSubmit={(e) => {
-          e.preventDefault();
-          navigate("/verify-email", {
-            state: { email: email || "parent@example.com" },
-          });
-        }}
-      >
-        <InputField placeholder="Full Name" type="text" icon={User} required />
+      <form className="space-y-3" onSubmit={handleSubmit(handleSignup)}>
+        <InputField
+          placeholder="Full Name"
+          type="text"
+          {...register("name")}
+          icon={User}
+          required
+        />
         <InputField
           placeholder="Email Address"
           type="email"
+          {...register("email")}
           icon={Mail}
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
           required
         />
         <InputField
           placeholder="Password"
           type="password"
+          {...register("password", {
+            validate: (value) =>
+              isMatch(value, form.getValues("passwordConfirm")) ||
+              "Passwords do not match",
+            deps: ["passwordConfirm"],
+          })}
+          error={formErrors.password?.message}
+          icon={Lock}
+          required
+        />
+
+        <InputField
+          placeholder="Confirm Password"
+          type="password"
+          {...register("passwordConfirm", {
+            validate: (value) =>
+              isMatch(form.getValues("password"), value) ||
+              "Passwords do not match",
+            deps: ["password"],
+          })}
+          error={formErrors.passwordConfirm?.message}
           icon={Lock}
           required
         />
