@@ -2,7 +2,7 @@ import { ASSETS } from "@/assets";
 import { FacebookIcon, InstagramIcon } from "@/components/common/BrandIcons";
 import { THEME } from "@/constants/config";
 import { useAppContext } from "@/context/AppContext";
-import { Heart, MessageCircle, Sparkles, Sun } from "lucide-react";
+import { MessageCircle, Sun } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const LandingPage = () => {

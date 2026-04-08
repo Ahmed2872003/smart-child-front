@@ -1,6 +1,9 @@
 import "./App.css";
+import "react-toastify/dist/ReactToastify.css";
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import { AppContextProvider } from "./context/AppContext";
 
@@ -18,30 +21,45 @@ import ForgotPassword from "./views/Auth/ForgotPassword";
 import VerifyEmail from "./views/Auth/VerifyEmail";
 import ResetPassword from "./views/Auth/ResetPassword";
 
+import authService from "@/services/authService.js";
+
+import { ToastContainer } from "react-toastify";
+
 const basename = import.meta.env.VITE_URL_BASENAME;
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 export default function App() {
   return (
-    <AppContextProvider>
-      <Router basename={basename || "/"}>
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/parent-dashboard" element={<ParentDashboard />} />
-          <Route path="/child-dashboard" element={<ChildDashboard />} />
-          <Route path="/free-play" element={<FreePlayMenu />} />
-          <Route path="/loading" element={<GamifiedLoader delay={2500} />} />
-          <Route path="/game" element={<GamePlay />} />
-          <Route path="/reports" element={<ReportsDashboard />} />
+    <QueryClientProvider client={queryClient}>
+      <AppContextProvider>
+        <Router basename={basename || "/"}>
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/parent-dashboard" element={<ParentDashboard />} />
+            <Route path="/child-dashboard" element={<ChildDashboard />} />
+            <Route path="/free-play" element={<FreePlayMenu />} />
+            <Route path="/loading" element={<GamifiedLoader delay={2500} />} />
+            <Route path="/game" element={<GamePlay />} />
+            <Route path="/reports" element={<ReportsDashboard />} />
 
-          <Route element={<AuthLayoutWrapper />}>
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/forgot-password" element={<ForgotPassword />} />
-            <Route path="/verify-email" element={<VerifyEmail />} />
-            <Route path="/reset-password" element={<ResetPassword />} />
-          </Route>
-        </Routes>
-      </Router>
-    </AppContextProvider>
+            <Route element={<AuthLayoutWrapper />}>
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route path="/verify-email" element={<VerifyEmail />} />
+              <Route path="/reset-password" element={<ResetPassword />} />
+            </Route>
+          </Routes>
+          <ToastContainer position="top-right" autoClose={3000} />
+        </Router>
+      </AppContextProvider>
+    </QueryClientProvider>
   );
 }
