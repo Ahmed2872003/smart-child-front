@@ -3,7 +3,7 @@ import apiClient from "@/api/apiClient.js";
 const authStartEndpoint = "users";
 
 const login = async (data) => {
-  return apiClient.get(`${authStartEndpoint}/login`, { params: data });
+  return apiClient.post(`${authStartEndpoint}/login`, data);
 };
 
 const signup = async (data) => {
@@ -17,5 +17,7 @@ const forgotPass = async (data) => {
 const resetPass = async (data, token) => {
   return apiClient.patch(`users/resetPassword/${token}`, data);
 };
+
+const verifyEmail = async () => {};
 
 export default { login, signup, forgotPass, resetPass };

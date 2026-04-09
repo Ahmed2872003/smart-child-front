@@ -19,6 +19,7 @@ import AuthLayoutWrapper from "./layouts/AuthLayout";
 import Login from "./views/Auth/Login";
 import Register from "./views/Auth/Register";
 import ForgotPassword from "./views/Auth/ForgotPassword";
+import ConfirmEmail from "./views/Auth/ConfirmEmail";
 import VerifyEmail from "./views/Auth/VerifyEmail";
 import ResetPassword from "./views/Auth/ResetPassword";
 
@@ -55,6 +56,7 @@ export default function App() {
               <Route path="/register" element={<Register />} />
               <Route path="/forgot-password" element={<ForgotPassword />} />
               <Route path="/verify-email" element={<VerifyEmail />} />
+              <Route path="/confirm-email/:token" element={<ConfirmEmail />} />
               <Route
                 path="/reset-password/:token"
                 element={<ResetPassword />}
@@ -63,7 +65,7 @@ export default function App() {
           </Routes>
         </Router>
         <ToastContainer position="top-right" autoClose={3000} />
-        {import.meta.env.DEV && <ReactQueryDevtools initialIsOpen={true} />}
+        {import.meta.env.DEV && <ReactQueryDevtools initialIsOpen={false} />}
       </AppContextProvider>
     </QueryClientProvider>
   );
