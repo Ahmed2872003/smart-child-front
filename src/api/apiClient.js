@@ -29,6 +29,8 @@ apiClient.interceptors.response.use(
     return response.data;
   },
   (error) => {
+    if (error.config?.silent_error) return Promise.reject(error);
+
     if (!error.response) {
       toast.error("Network error. Please check your connection.");
       return Promise.reject(error);
@@ -36,7 +38,9 @@ apiClient.interceptors.response.use(
 
     const status = error.response.status;
 
-    const serverMessage = error.response.data?.message;
+    let serverMessage = error.response.data?.message;
+
+    serverMessage = serverMessage && serverMessage.split(":").pop().trim();
 
     switch (status) {
       case 400:

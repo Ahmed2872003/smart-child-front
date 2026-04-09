@@ -7,6 +7,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 import useAuth from "@/hooks/useAuth";
+import { emailPattern } from "@/constants/pattern";
 
 const timeDuration = 60;
 
@@ -23,6 +24,7 @@ const ForgotPassword = () => {
     register,
     handleSubmit,
     getValues: getFormData,
+    formState: { errors },
   } = useForm({ defaultValues: { email } });
 
   const [timeLeft, setTimeLeft] = useState(timeDuration);
@@ -124,9 +126,15 @@ const ForgotPassword = () => {
           type="email"
           placeholder="Email Address"
           disabled={forgotPass.isPending}
-          {...register("email")}
+          {...register("email", {
+            required: "required",
+            pattern: {
+              value: emailPattern,
+              message: "Enter a valid email address",
+            },
+          })}
+          error={errors.email?.message}
           icon={Mail}
-          required
         />
         <button
           type="submit"

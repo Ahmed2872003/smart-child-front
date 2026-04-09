@@ -54,7 +54,11 @@ const InputField = forwardRef(
       {/* Error Message & Action Label Row */}
       <div className="flex justify-between items-start mt-1.5 px-2">
         <div className="flex-1">
-          {error && <p className="text-xs text-red-500 font-medium">{error}</p>}
+          {error && (
+            <p className="text-xs text-red-500 font-medium whitespace-pre-line">
+              {error}
+            </p>
+          )}
         </div>
 
         {actionLabel && (

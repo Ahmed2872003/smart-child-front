@@ -7,13 +7,20 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 import useAuth from "@/hooks/useAuth";
+import { emailPattern } from "@/constants/pattern";
 
 const Login = () => {
   const navigate = useNavigate();
   const { setParentData } = useAppContext();
   const { login } = useAuth();
-  const { handleSubmit, register, getValues: getFormData } = useForm();
-  console.log("render");
+  const {
+    handleSubmit,
+    register,
+    getValues: getFormData,
+    formState: { errors },
+  } = useForm();
+
+  console.log(errors.email?.message);
 
   const handleLogin = (data) => {
     login.mutate(data);
@@ -39,8 +46,14 @@ const Login = () => {
         <InputField
           type="email"
           placeholder="Email"
-          required={true}
-          {...register("email")}
+          {...register("email", {
+            required: "required",
+            pattern: {
+              value: emailPattern,
+              message: "Enter a valid email address",
+            },
+          })}
+          error={errors.email?.message}
           icon={Mail}
           actionLabel="Forget password?"
           onAction={() =>
@@ -52,8 +65,10 @@ const Login = () => {
         <InputField
           type="password"
           placeholder="Password"
-          required={true}
-          {...register("password")}
+          {...register("password", {
+            required: "required",
+          })}
+          error={errors.password?.message}
           icon={Lock}
         />
         <button

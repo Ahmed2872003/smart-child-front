@@ -1,13 +1,20 @@
+import useAuth from "@/hooks/useAuth";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 export default function ConfirmEmail() {
   const { token } = useParams();
 
+  const { confirmEmail } = useAuth();
+
+  useEffect(() => {
+    confirmEmail.mutate(token);
+  }, []);
+
   return (
     <div className="min-h-screen flex items-center justify-center p-6 font-sans">
       <div className="max-w-md w-full bg-white p-10 text-center">
-        {/* Loading State */}
-        {status === "loading" && (
+        {confirmEmail.isPending && (
           <div className="space-y-6">
             <h2 className="text-3xl font-black text-[#2D2D2D]">Verifying...</h2>
             <div className="flex justify-center">
@@ -19,8 +26,7 @@ export default function ConfirmEmail() {
           </div>
         )}
 
-        {/* Success State */}
-        {status === "success" && (
+        {confirmEmail.isSuccess && (
           <div className="space-y-6 animate-in fade-in zoom-in duration-300">
             <div className="w-20 h-20 bg-[#89B07C]/10 text-[#89B07C] rounded-full flex items-center justify-center mx-auto text-4xl">
               ✓
@@ -33,8 +39,7 @@ export default function ConfirmEmail() {
           </div>
         )}
 
-        {/* Fail State */}
-        {status === "error" && (
+        {confirmEmail.isError && (
           <div className="space-y-6 animate-in fade-in zoom-in duration-300">
             <div className="w-20 h-20 bg-[#FF6B6B]/10 text-[#FF6B6B] rounded-full flex items-center justify-center mx-auto text-4xl font-light">
               ✕

@@ -15,9 +15,15 @@ const forgotPass = async (data) => {
 };
 
 const resetPass = async (data, token) => {
-  return apiClient.patch(`users/resetPassword/${token}`, data);
+  return apiClient.patch(`${authStartEndpoint}}/resetPassword/${token}`, data);
 };
 
-const verifyEmail = async () => {};
+const confirmEmail = async (token) => {
+  return apiClient.post(
+    `${authStartEndpoint}/verify-email/${token}`,
+    {},
+    { silent_error: true },
+  );
+};
 
-export default { login, signup, forgotPass, resetPass };
+export default { login, signup, forgotPass, resetPass, confirmEmail };

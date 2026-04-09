@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import useAuth from "@/hooks/useAuth";
+import { emailPattern, namePattern } from "@/constants/pattern";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -37,21 +38,35 @@ const Register = () => {
         <InputField
           placeholder="Full Name"
           type="text"
-          {...register("name")}
+          {...register("name", {
+            required: "required",
+            pattern: {
+              value: namePattern,
+              message:
+                "- Starts with a letter\n- Only letters and _\n- No double spaces",
+            },
+          })}
+          error={formErrors.name?.message}
           icon={User}
-          required
         />
         <InputField
           placeholder="Email Address"
           type="email"
-          {...register("email")}
+          {...register("email", {
+            required: "required",
+            pattern: {
+              value: emailPattern,
+              message: "Enter a valid email address",
+            },
+          })}
+          error={formErrors.email?.message}
           icon={Mail}
-          required
         />
         <InputField
           placeholder="Password"
           type="password"
           {...register("password", {
+            required: "required",
             validate: (value) =>
               isMatch(value, form.getValues("passwordConfirm")) ||
               "Passwords do not match",
@@ -59,13 +74,13 @@ const Register = () => {
           })}
           error={formErrors.password?.message}
           icon={Lock}
-          required
         />
 
         <InputField
           placeholder="Confirm Password"
           type="password"
           {...register("passwordConfirm", {
+            required: "required",
             validate: (value) =>
               isMatch(form.getValues("password"), value) ||
               "Passwords do not match",
@@ -73,7 +88,6 @@ const Register = () => {
           })}
           error={formErrors.passwordConfirm?.message}
           icon={Lock}
-          required
         />
         <button
           type="submit"

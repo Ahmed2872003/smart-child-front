@@ -49,11 +49,16 @@ const useAuth = () => {
     },
   });
 
+  const confirmEmailMutation = useMutation({
+    mutationFn: authService.confirmEmail,
+  });
+
   return {
     login: loginMutation,
     signup: signupMutation,
     forgotPass: forgotPassMutation,
     resetPass: resetPassMutation,
+    confirmEmail: confirmEmailMutation,
   };
 };
 
