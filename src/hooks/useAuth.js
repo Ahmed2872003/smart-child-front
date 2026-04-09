@@ -49,6 +49,13 @@ const useAuth = () => {
     },
   });
 
+  const verifyEmailMutation = useMutation({
+    mutationFn: authService.verifyEmail,
+    onSuccess: (res) => {
+      toast.success(res.message);
+    },
+  });
+
   const confirmEmailMutation = useMutation({
     mutationFn: authService.confirmEmail,
   });
@@ -58,6 +65,7 @@ const useAuth = () => {
     signup: signupMutation,
     forgotPass: forgotPassMutation,
     resetPass: resetPassMutation,
+    verifyEmail: verifyEmailMutation,
     confirmEmail: confirmEmailMutation,
   };
 };

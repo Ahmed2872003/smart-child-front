@@ -1,12 +1,17 @@
+import useAuth from "@/hooks/useAuth";
 import { Mail } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+
+const time = 3;
 
 const VerifyEmail = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const email = location.state?.email || "your@email.com";
-  const [timeLeft, setTimeLeft] = useState(60);
+  const [timeLeft, setTimeLeft] = useState(time);
+
+  const { verifyEmail } = useAuth();
 
   useEffect(() => {
     if (timeLeft > 0) {
@@ -14,6 +19,12 @@ const VerifyEmail = () => {
       return () => clearTimeout(timer);
     }
   }, [timeLeft]);
+
+  const handleResetLink = () => {
+    setTimeLeft(time);
+
+    verifyEmail.mutate({ email });
+  };
 
   return (
     <div className="text-center animate-in fade-in duration-500">
@@ -47,7 +58,7 @@ const VerifyEmail = () => {
           </span>
         ) : (
           <button
-            onClick={() => setTimeLeft(60)}
+            onClick={handleResetLink}
             className="text-black underline decoration-2 underline-offset-4 hover:text-[#FFC82C] transition-colors mt-2"
           >
             Resend now
