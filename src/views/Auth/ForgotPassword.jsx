@@ -6,7 +6,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 import { useForm } from "react-hook-form";
 
-import useAuth from "@/hooks/useAuth";
+import { useForgotPass } from "@/hooks/Auth";
 import { emailPattern } from "@/constants/pattern";
 
 const timeDuration = 60;
@@ -29,7 +29,7 @@ const ForgotPassword = () => {
 
   const [timeLeft, setTimeLeft] = useState(timeDuration);
 
-  const { forgotPass } = useAuth();
+  const forgotPass = useForgotPass();
 
   useEffect(() => {
     if (isSent && timeLeft > 0) {

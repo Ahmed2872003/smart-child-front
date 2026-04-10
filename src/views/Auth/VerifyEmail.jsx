@@ -1,9 +1,9 @@
-import useAuth from "@/hooks/useAuth";
+import { useVerifyEmail } from "@/hooks/Auth";
 import { Mail } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-const time = 3;
+const time = 60;
 
 const VerifyEmail = () => {
   const navigate = useNavigate();
@@ -11,7 +11,7 @@ const VerifyEmail = () => {
   const email = location.state?.email || "your@email.com";
   const [timeLeft, setTimeLeft] = useState(time);
 
-  const { verifyEmail } = useAuth();
+  const verifyEmail = useVerifyEmail();
 
   useEffect(() => {
     if (timeLeft > 0) {

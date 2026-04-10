@@ -1,11 +1,11 @@
-import useAuth from "@/hooks/useAuth";
+import { useConfirmEmail } from "@/hooks/Auth";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 export default function ConfirmEmail() {
   const { token } = useParams();
 
-  const { confirmEmail } = useAuth();
+  const confirmEmail = useConfirmEmail();
 
   useEffect(() => {
     confirmEmail.mutate(token);

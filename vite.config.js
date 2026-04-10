@@ -22,7 +22,7 @@ export default defineConfig(({ mode }) => {
         enableBuild: false,
         terminal: false,
         overlay: {
-          initialIsOpen: true,
+          initialIsOpen: false,
         },
       }),
     ],

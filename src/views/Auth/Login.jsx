@@ -6,13 +6,13 @@ import { Lock, Mail } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
-import useAuth from "@/hooks/useAuth";
+import { useLogin } from "@/hooks/Auth";
 import { emailPattern } from "@/constants/pattern";
 
 const Login = () => {
   const navigate = useNavigate();
   const { setParentData } = useAppContext();
-  const { login } = useAuth();
+  const login = useLogin();
   const {
     handleSubmit,
     register,

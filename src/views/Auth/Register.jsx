@@ -5,7 +5,7 @@ import { Lock, Mail, User } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import useAuth from "@/hooks/useAuth";
+import { useSignup } from "@/hooks/Auth";
 import { emailPattern, namePattern } from "@/constants/pattern";
 
 const Register = () => {
@@ -18,7 +18,7 @@ const Register = () => {
     ...form
   } = useForm();
 
-  const { signup } = useAuth();
+  const signup = useSignup();
 
   const handleSignup = (data) => {
     signup.mutate(data);
