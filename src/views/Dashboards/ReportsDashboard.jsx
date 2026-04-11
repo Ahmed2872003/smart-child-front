@@ -50,176 +50,149 @@ const ReportsDashboard = () => {
   };
 
   return (
-    <div className={`min-h-screen ${THEME.bgBeige} relative`}>
+    <>
       <style>{`@media print { body { background-color: white !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; } .no-print { display: none !important; } @page { margin: 15mm; size: A4 portrait; } }`}</style>
       <div className={`no-print ${activePrintReport ? "hidden" : "block"}`}>
-        <header className="bg-[#FFFDF8]  flex items-center justify-between  top-0  px-6 md:px-12 py-6 max-w-7xl mx-auto sticky z-50">
-          <div className="flex items-center gap-4">
-            <button
-              onClick={() => navigate("/parent-dashboard")}
-              className="bg-gray-100 p-2 rounded-full hover:bg-gray-200 transition-colors text-gray-600"
-            >
-              <ArrowLeft size={20} />
-            </button>
-            <img src={ASSETS.logo} alt="logo" className="w-16" />
-          </div>
-          <div
-            className="flex items-center gap-3 cursor-pointer"
-            onClick={() => navigate("/")}
-          >
+        <div className="flex flex-col md:flex-row md:justify-between md:items-end gap-6 border-b border-gray-200 pb-8">
+          <div className="flex items-center gap-6">
             <img
-              src={ASSETS.avatars.parent}
-              className="w-10 h-10 rounded-full bg-gray-100 border border-gray-200"
-              alt="Parent"
+              src={childAvatar}
+              className="w-20 h-20 rounded-full bg-blue-50 border-4 border-white shadow-sm object-cover"
+              alt={childName}
             />
-          </div>
-        </header>
-
-        <main className="max-w-5xl mx-auto p-6 md:p-10 space-y-12 animate-in fade-in duration-500">
-          <div className="flex flex-col md:flex-row md:justify-between md:items-end gap-6 border-b border-gray-200 pb-8">
-            <div className="flex items-center gap-6">
-              <img
-                src={childAvatar}
-                className="w-20 h-20 rounded-full bg-blue-50 border-4 border-white shadow-sm object-cover"
-                alt={childName}
-              />
-              <div>
-                <h1 className="text-4xl font-black text-gray-900 tracking-tight mb-1">
-                  {childName}'s Progress
-                </h1>
-                <p className="text-gray-500 font-medium flex items-center gap-2 mb-3">
-                  <Calendar size={16} /> Last Assessment: Today, 2:30 PM
-                </p>
-                <div className="flex flex-wrap items-center gap-3">
-                  <div className="bg-green-50 text-green-700 font-bold px-3 py-1.5 rounded-xl flex items-center gap-2 border border-green-100 w-fit text-sm">
-                    <TrendingUp size={16} /> Overall Growth: +15%
-                  </div>
-                  <div className="bg-yellow-50 text-yellow-700 font-bold px-3 py-1.5 rounded-xl flex items-center gap-2 border border-yellow-100 w-fit text-sm">
-                    <Smile size={16} /> Overall Feeling: Happy 😊
-                  </div>
+            <div>
+              <h1 className="text-4xl font-black text-gray-900 tracking-tight mb-1">
+                {childName}'s Progress
+              </h1>
+              <p className="text-gray-500 font-medium flex items-center gap-2 mb-3">
+                <Calendar size={16} /> Last Assessment: Today, 2:30 PM
+              </p>
+              <div className="flex flex-wrap items-center gap-3">
+                <div className="bg-green-50 text-green-700 font-bold px-3 py-1.5 rounded-xl flex items-center gap-2 border border-green-100 w-fit text-sm">
+                  <TrendingUp size={16} /> Overall Growth: +15%
+                </div>
+                <div className="bg-yellow-50 text-yellow-700 font-bold px-3 py-1.5 rounded-xl flex items-center gap-2 border border-yellow-100 w-fit text-sm">
+                  <Smile size={16} /> Overall Feeling: Happy 😊
                 </div>
               </div>
             </div>
-            <button
-              onClick={() => handlePrint("overall")}
-              className={`${THEME.primaryYellow} text-black font-black px-6 py-4 rounded-full shadow-sm hover:-translate-y-1 transition-all flex items-center gap-2 text-lg`}
-            >
-              <Download size={22} /> Overall Report
-            </button>
           </div>
+          <button
+            onClick={() => handlePrint("overall")}
+            className={`${THEME.primaryYellow} text-black font-black px-6 py-4 rounded-full shadow-sm hover:-translate-y-1 transition-all flex items-center gap-2 text-lg`}
+          >
+            <Download size={22} /> Overall Report
+          </button>
+        </div>
 
-          <section>
-            <h2 className="text-2xl font-black text-gray-900 mb-6 flex items-center gap-2">
-              <TrendingUp size={24} className="text-blue-500" /> General
-              Progress (Last 5 Sessions)
-            </h2>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {Object.entries(MOCK_REPORTS_DATA)
-                .filter(([key]) => key !== "drawing")
-                .map(([key, data]) => {
-                  const Icon = data.icon;
-                  let ChartComponent;
-                  if (key === "memory")
-                    ChartComponent = <MemoryChartVisual data={data.history} />;
-                  else if (key === "reaction")
-                    ChartComponent = (
-                      <ReactionChartVisual data={data.history} />
-                    );
-                  else if (key === "color")
-                    ChartComponent = (
-                      <ColorChartVisual
-                        history={data.history}
-                        rgb={data.rgbProfile}
-                      />
-                    );
-                  else if (key === "hearing")
-                    ChartComponent = <HearingChartVisual data={data.history} />;
-                  else
-                    ChartComponent = (
-                      <MiniLineChart
-                        data={data.history}
-                        colorClass={data.textColor}
-                      />
-                    );
-
-                  return (
-                    <div
-                      key={key}
-                      className="bg-white rounded-[2rem] p-6 shadow-sm border border-gray-100 flex flex-col h-full"
-                    >
-                      <div className="flex items-center gap-4 mb-6">
-                        <div
-                          className={`w-12 h-12 rounded-2xl ${data.color} flex items-center justify-center text-white shadow-sm`}
-                        >
-                          <Icon size={24} />
-                        </div>
-                        <div>
-                          <h3 className="text-xl font-black text-gray-900">
-                            {data.title}
-                          </h3>
-                          <p
-                            className={`text-xs font-bold text-gray-400 flex items-center gap-1 uppercase tracking-wider`}
-                          >
-                            {key === "drawing"
-                              ? "Interactions"
-                              : "Metrics & Trends"}
-                          </p>
-                        </div>
-                      </div>
-                      <div className="bg-gray-50 rounded-xl p-5 relative flex-none mb-6">
-                        {ChartComponent}
-                      </div>
-                      <div className="mt-auto p-4 bg-blue-50/50 rounded-xl text-sm text-gray-700 font-medium leading-relaxed border border-blue-100/50">
-                        <strong className="text-blue-900 block mb-1 flex items-center gap-1.5">
-                          <Activity size={16} /> Insight:
-                        </strong>
-                        {data.insight}
-                      </div>
-                    </div>
+        <section>
+          <h2 className="text-2xl font-black text-gray-900 mb-6 flex items-center gap-2">
+            <TrendingUp size={24} className="text-blue-500" /> General Progress
+            (Last 5 Sessions)
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {Object.entries(MOCK_REPORTS_DATA)
+              .filter(([key]) => key !== "drawing")
+              .map(([key, data]) => {
+                const Icon = data.icon;
+                let ChartComponent;
+                if (key === "memory")
+                  ChartComponent = <MemoryChartVisual data={data.history} />;
+                else if (key === "reaction")
+                  ChartComponent = <ReactionChartVisual data={data.history} />;
+                else if (key === "color")
+                  ChartComponent = (
+                    <ColorChartVisual
+                      history={data.history}
+                      rgb={data.rgbProfile}
+                    />
                   );
-                })}
-            </div>
-          </section>
+                else if (key === "hearing")
+                  ChartComponent = <HearingChartVisual data={data.history} />;
+                else
+                  ChartComponent = (
+                    <MiniLineChart
+                      data={data.history}
+                      colorClass={data.textColor}
+                    />
+                  );
 
-          <section>
-            <h2 className="text-2xl font-black text-gray-900 mb-6 flex items-center gap-2">
-              <FileText size={24} className="text-pink-500" /> Assessment
-              History
-            </h2>
-            <div className="bg-white rounded-[2rem] shadow-sm border border-gray-100 overflow-hidden flex flex-col">
-              {MOCK_HISTORY_DATA.map((item) => (
-                <div
-                  key={item.id}
-                  onClick={() => setSelectedHistoryItem(item)}
-                  className="p-5 md:p-6 border-b border-gray-50 flex items-center justify-between gap-4 hover:bg-gray-50 cursor-pointer transition-colors group"
-                >
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-2xl bg-indigo-500 flex items-center justify-center text-white shadow-sm flex-shrink-0 group-hover:scale-105 transition-transform">
-                      <Puzzle size={20} />
+                return (
+                  <div
+                    key={key}
+                    className="bg-white rounded-[2rem] p-6 shadow-sm border border-gray-100 flex flex-col h-full"
+                  >
+                    <div className="flex items-center gap-4 mb-6">
+                      <div
+                        className={`w-12 h-12 rounded-2xl ${data.color} flex items-center justify-center text-white shadow-sm`}
+                      >
+                        <Icon size={24} />
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-black text-gray-900">
+                          {data.title}
+                        </h3>
+                        <p
+                          className={`text-xs font-bold text-gray-400 flex items-center gap-1 uppercase tracking-wider`}
+                        >
+                          {key === "drawing"
+                            ? "Interactions"
+                            : "Metrics & Trends"}
+                        </p>
+                      </div>
                     </div>
-                    <div>
-                      <h4 className="font-black text-gray-900 text-lg">
-                        {item.title}
-                      </h4>
-                      <p className="text-sm text-gray-500 font-bold">
-                        {item.date}
-                      </p>
+                    <div className="bg-gray-50 rounded-xl p-5 relative flex-none mb-6">
+                      {ChartComponent}
+                    </div>
+                    <div className="mt-auto p-4 bg-blue-50/50 rounded-xl text-sm text-gray-700 font-medium leading-relaxed border border-blue-100/50">
+                      <strong className="text-blue-900 block mb-1 flex items-center gap-1.5">
+                        <Activity size={16} /> Insight:
+                      </strong>
+                      {data.insight}
                     </div>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <span className="hidden sm:inline-block bg-gray-100 text-gray-700 text-xs font-black px-3 py-1.5 rounded-lg border border-gray-200">
-                      Score: {item.score}
-                    </span>
-                    <ChevronRight
-                      className="text-gray-300 group-hover:text-gray-600 transition-colors"
-                      size={20}
-                    />
+                );
+              })}
+          </div>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-black text-gray-900 mb-6 flex items-center gap-2">
+            <FileText size={24} className="text-pink-500" /> Assessment History
+          </h2>
+          <div className="bg-white rounded-[2rem] shadow-sm border border-gray-100 overflow-hidden flex flex-col">
+            {MOCK_HISTORY_DATA.map((item) => (
+              <div
+                key={item.id}
+                onClick={() => setSelectedHistoryItem(item)}
+                className="p-5 md:p-6 border-b border-gray-50 flex items-center justify-between gap-4 hover:bg-gray-50 cursor-pointer transition-colors group"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-2xl bg-indigo-500 flex items-center justify-center text-white shadow-sm flex-shrink-0 group-hover:scale-105 transition-transform">
+                    <Puzzle size={20} />
+                  </div>
+                  <div>
+                    <h4 className="font-black text-gray-900 text-lg">
+                      {item.title}
+                    </h4>
+                    <p className="text-sm text-gray-500 font-bold">
+                      {item.date}
+                    </p>
                   </div>
                 </div>
-              ))}
-            </div>
-          </section>
-        </main>
+                <div className="flex items-center gap-3">
+                  <span className="hidden sm:inline-block bg-gray-100 text-gray-700 text-xs font-black px-3 py-1.5 rounded-lg border border-gray-200">
+                    Score: {item.score}
+                  </span>
+                  <ChevronRight
+                    className="text-gray-300 group-hover:text-gray-600 transition-colors"
+                    size={20}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
       </div>
 
       {selectedHistoryItem && (
@@ -545,7 +518,7 @@ const ReportsDashboard = () => {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 };
 

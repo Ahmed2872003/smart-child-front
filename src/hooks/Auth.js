@@ -47,7 +47,7 @@ const useAuthSuccess = () => {
 
     for (let sucessMsg of successMessages) toast.success(sucessMsg);
 
-    navigate("/parent-dashboard");
+    navigate("/parent/dashboard");
   };
 
   return handleAuthSuccess;

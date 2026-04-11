@@ -27,6 +27,8 @@ import authService from "@/services/authService.js";
 
 import { ToastContainer } from "react-toastify";
 import { NotFoundPage } from "./views/NotFoundPage";
+import { ParentProfile } from "./views/ParentProfile";
+import { ParentDashboardLayout } from "./layouts/ParentDashboardLayout";
 
 const basename = import.meta.env.VITE_URL_BASENAME;
 
@@ -45,12 +47,16 @@ export default function App() {
         <Router basename={basename || "/"}>
           <Routes>
             <Route path="/" element={<LandingPage />} />
-            <Route path="/parent-dashboard" element={<ParentDashboard />} />
+
+            <Route path="/parent" element={<ParentDashboardLayout />}>
+              <Route path="dashboard" element={<ParentDashboard />} />
+              <Route path="profile" element={<ParentProfile />} />
+              <Route path="child/reports" element={<ReportsDashboard />} />
+            </Route>
+
             <Route path="/child-dashboard" element={<ChildDashboard />} />
             <Route path="/free-play" element={<FreePlayMenu />} />
-            <Route path="/loading" element={<GamifiedLoader delay={2500} />} />
             <Route path="/game" element={<GamePlay />} />
-            <Route path="/reports" element={<ReportsDashboard />} />
             {/* Auth Routes */}
             <Route element={<AuthLayoutWrapper />}>
               <Route path="/login" element={<Login />} />

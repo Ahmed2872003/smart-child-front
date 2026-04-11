@@ -1,22 +1,10 @@
 import { SOUNDS } from "@/assets";
 import { THEME } from "@/constants/config";
 import { Heart, Puzzle, Sparkles, Star } from "lucide-react";
-import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useState } from "react";
 
-const GamifiedLoader = ({ delay = 3000 }) => {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const nextView = location.state?.nextView || "/";
-
+const GamifiedLoader = () => {
   const [taps, setTaps] = useState(0);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      navigate(nextView);
-    }, delay);
-    return () => clearTimeout(timer);
-  }, [navigate, nextView, delay]);
 
   const handleTap = () => {
     setTaps((prev) => prev + 1);
@@ -28,7 +16,7 @@ const GamifiedLoader = ({ delay = 3000 }) => {
 
   return (
     <div
-      className={`min-h-screen ${THEME.bgBeige} flex flex-col items-center justify-center p-6 relative overflow-hidden touch-none select-none`}
+      className={` ${THEME.bgBeige} flex flex-col flex-1 items-center justify-center p-2 relative overflow-hidden touch-none select-none`}
       onPointerDown={handleTap}
     >
       <div
@@ -53,7 +41,7 @@ const GamifiedLoader = ({ delay = 3000 }) => {
       <div className="bg-white p-10 md:p-14 rounded-[3rem] shadow-xl text-center z-10 flex flex-col items-center transform transition-transform active:scale-95 cursor-pointer">
         <div className="w-28 h-28 bg-gray-50 rounded-full flex items-center justify-center mb-6 relative">
           <div
-            className={`absolute inset-0 border-4 border-yellow-400 border-t-transparent rounded-full ${taps > 5 ? "animate-spin-fast" : "animate-spin"}`}
+            className={`absolute inset-0 border-4 border-yellow-400 border-t-transparent rounded-full animate-spin`}
             style={{ animationDuration: Math.max(0.2, 1 - taps * 0.05) + "s" }}
           ></div>
           <Sparkles

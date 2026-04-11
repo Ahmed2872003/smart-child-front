@@ -148,150 +148,146 @@ const ParentDashboard = () => {
   const linkedProfiles = profiles.filter((p) => p.role === "linked");
 
   return (
-    <div className={`min-h-screen ${THEME.bgBeige} relative`}>
-      <ParentDashboardHeader />
+    <>
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-4">
+        <div>
+          <h1 className="text-4xl font-black text-gray-900 tracking-tight mb-2">
+            Dashboard
+          </h1>
+          <p className="text-gray-500 font-medium">
+            Manage profiles and view progress
+          </p>
+        </div>
+        <button
+          onClick={() => openModal("ADD")}
+          className={`${THEME.primaryYellow} ${THEME.textBlack} font-bold px-6 py-3 rounded-full hover:bg-[#E5B427] transition-colors shadow-sm`}
+        >
+          + Add Child
+        </button>
+      </div>
 
-      <main className="max-w-5xl mx-auto p-6 md:p-10 space-y-12 animate-in fade-in duration-500">
-        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-4">
-          <div>
-            <h1 className="text-4xl font-black text-gray-900 tracking-tight mb-2">
-              Dashboard
-            </h1>
-            <p className="text-gray-500 font-medium">
-              Manage profiles and view progress
+      <section className="mb-12">
+        <h2 className="text-2xl font-black text-gray-900 mb-6 flex items-center gap-2">
+          Managed Profiles
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {ownerProfiles.map((profile) => (
+            <div
+              key={profile.id}
+              className="bg-white rounded-[2rem] shadow-sm border border-gray-100 p-8 flex flex-col items-center text-center relative overflow-hidden group"
+            >
+              <div className="absolute top-4 left-4 text-xs font-bold text-[#4ade80] bg-green-50 px-3 py-1 rounded-full border border-green-100">
+                Owner
+              </div>
+              <div className="absolute top-4 right-4 flex gap-1 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">
+                <button
+                  onClick={() => openModal("EDIT", profile)}
+                  className="p-2 bg-gray-50 text-gray-400 hover:text-blue-500 hover:bg-blue-50 rounded-full transition-colors"
+                  title="Edit Profile"
+                >
+                  <PenTool size={16} />
+                </button>
+                <button
+                  onClick={() => openModal("DELETE", profile)}
+                  className="p-2 bg-gray-50 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-full transition-colors"
+                  title="Delete Profile"
+                >
+                  <Trash2 size={16} />
+                </button>
+              </div>
+              <img
+                src={profile.avatar}
+                className="w-24 h-24 rounded-full bg-blue-50 border-4 border-white shadow-sm mb-4 object-cover"
+                alt={profile.name}
+              />
+              <h3 className="text-2xl font-black text-gray-900 mb-1">
+                {profile.name}
+                {profile.age !== "-" && `, ${profile.age}`}
+              </h3>
+              <p className="text-sm text-gray-400 font-medium mb-6">
+                Last active: {profile.lastActive}
+              </p>
+
+              <div className="flex flex-col w-full gap-3 mt-auto">
+                <button
+                  onClick={() => openModal("PLAY_WARNING", profile)}
+                  className={`w-full ${THEME.primaryYellow} ${THEME.textBlack} font-bold py-3 rounded-full hover:bg-[#E5B427] transition-colors text-sm flex justify-center items-center gap-2`}
+                >
+                  <Play size={16} fill="currentColor" /> Play Mode
+                </button>
+                <button
+                  onClick={() => {
+                    setActiveChild(profile);
+                    navigate("/parent/child/reports");
+                  }}
+                  className="w-full bg-gray-50 hover:bg-gray-100 text-gray-700 font-bold py-3 rounded-full transition-colors text-sm flex justify-center items-center gap-2"
+                >
+                  <BarChart2 size={16} /> View Reports
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section>
+        <h2 className="text-2xl font-black text-gray-900 mb-6 flex items-center gap-2">
+          Linked Profiles
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {linkedProfiles.map((profile) => (
+            <div
+              key={profile.id}
+              className="bg-white rounded-[2rem] shadow-sm border border-gray-100 p-8 flex flex-col items-center text-center relative overflow-hidden group"
+            >
+              <div className="absolute top-4 right-4 text-xs font-bold text-blue-500 bg-blue-50 px-3 py-1 rounded-full border border-blue-100 flex items-center gap-1">
+                <LinkIcon size={12} /> Linked
+              </div>
+              <img
+                src={profile.avatar}
+                className="w-24 h-24 rounded-full bg-blue-50 border-4 border-white shadow-sm mb-4 object-cover"
+                alt={profile.name}
+              />
+              <h3 className="text-2xl font-black text-gray-900 mb-1">
+                {profile.name}
+                {profile.age !== "-" && `, ${profile.age}`}
+              </h3>
+              <p className="text-sm text-gray-400 font-medium mb-6">
+                Last active: {profile.lastActive}
+              </p>
+              <div className="flex flex-col w-full gap-3 mt-auto">
+                <button
+                  onClick={() => openModal("PLAY_WARNING", profile)}
+                  className={`w-full ${THEME.primaryYellow} ${THEME.textBlack} font-bold py-3 rounded-full hover:bg-[#E5B427] transition-colors text-sm flex justify-center items-center gap-2`}
+                >
+                  <Play size={16} fill="currentColor" /> Play Mode
+                </button>
+                <button
+                  onClick={() => {
+                    setActiveChild(profile);
+                    navigate("/loading", { state: { nextView: "/reports" } });
+                  }}
+                  className="w-full bg-gray-50 hover:bg-gray-100 text-gray-700 font-bold py-3 rounded-full transition-colors text-sm flex justify-center items-center gap-2"
+                >
+                  <BarChart2 size={16} /> View Reports
+                </button>
+              </div>
+            </div>
+          ))}
+          <div
+            onClick={() => openModal("LINK")}
+            className="border-2 border-dashed border-gray-200 bg-gray-50/50 rounded-[2rem] p-8 flex flex-col items-center justify-center text-center cursor-pointer hover:border-yellow-400 hover:bg-yellow-50/30 transition-all min-h-[300px]"
+          >
+            <div className="w-16 h-16 rounded-full bg-white flex items-center justify-center mb-4 text-gray-300 shadow-sm group-hover:scale-110 transition-transform">
+              <Plus size={24} strokeWidth={3} />
+            </div>
+            <h3 className="text-xl font-bold text-gray-700">Link Profile</h3>
+            <p className="text-sm text-gray-400 font-medium mt-1">
+              Connect a read-only child profile
             </p>
           </div>
-          <button
-            onClick={() => openModal("ADD")}
-            className={`${THEME.primaryYellow} ${THEME.textBlack} font-bold px-6 py-3 rounded-full hover:bg-[#E5B427] transition-colors shadow-sm`}
-          >
-            + Add Child
-          </button>
         </div>
-
-        <section className="mb-12">
-          <h2 className="text-2xl font-black text-gray-900 mb-6 flex items-center gap-2">
-            Managed Profiles
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {ownerProfiles.map((profile) => (
-              <div
-                key={profile.id}
-                className="bg-white rounded-[2rem] shadow-sm border border-gray-100 p-8 flex flex-col items-center text-center relative overflow-hidden group"
-              >
-                <div className="absolute top-4 left-4 text-xs font-bold text-[#4ade80] bg-green-50 px-3 py-1 rounded-full border border-green-100">
-                  Owner
-                </div>
-                <div className="absolute top-4 right-4 flex gap-1 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">
-                  <button
-                    onClick={() => openModal("EDIT", profile)}
-                    className="p-2 bg-gray-50 text-gray-400 hover:text-blue-500 hover:bg-blue-50 rounded-full transition-colors"
-                    title="Edit Profile"
-                  >
-                    <PenTool size={16} />
-                  </button>
-                  <button
-                    onClick={() => openModal("DELETE", profile)}
-                    className="p-2 bg-gray-50 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-full transition-colors"
-                    title="Delete Profile"
-                  >
-                    <Trash2 size={16} />
-                  </button>
-                </div>
-                <img
-                  src={profile.avatar}
-                  className="w-24 h-24 rounded-full bg-blue-50 border-4 border-white shadow-sm mb-4 object-cover"
-                  alt={profile.name}
-                />
-                <h3 className="text-2xl font-black text-gray-900 mb-1">
-                  {profile.name}
-                  {profile.age !== "-" && `, ${profile.age}`}
-                </h3>
-                <p className="text-sm text-gray-400 font-medium mb-6">
-                  Last active: {profile.lastActive}
-                </p>
-
-                <div className="flex flex-col w-full gap-3 mt-auto">
-                  <button
-                    onClick={() => openModal("PLAY_WARNING", profile)}
-                    className={`w-full ${THEME.primaryYellow} ${THEME.textBlack} font-bold py-3 rounded-full hover:bg-[#E5B427] transition-colors text-sm flex justify-center items-center gap-2`}
-                  >
-                    <Play size={16} fill="currentColor" /> Play Mode
-                  </button>
-                  <button
-                    onClick={() => {
-                      setActiveChild(profile);
-                      navigate("/loading", { state: { nextView: "/reports" } });
-                    }}
-                    className="w-full bg-gray-50 hover:bg-gray-100 text-gray-700 font-bold py-3 rounded-full transition-colors text-sm flex justify-center items-center gap-2"
-                  >
-                    <BarChart2 size={16} /> View Reports
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section>
-          <h2 className="text-2xl font-black text-gray-900 mb-6 flex items-center gap-2">
-            Linked Profiles
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {linkedProfiles.map((profile) => (
-              <div
-                key={profile.id}
-                className="bg-white rounded-[2rem] shadow-sm border border-gray-100 p-8 flex flex-col items-center text-center relative overflow-hidden group"
-              >
-                <div className="absolute top-4 right-4 text-xs font-bold text-blue-500 bg-blue-50 px-3 py-1 rounded-full border border-blue-100 flex items-center gap-1">
-                  <LinkIcon size={12} /> Linked
-                </div>
-                <img
-                  src={profile.avatar}
-                  className="w-24 h-24 rounded-full bg-blue-50 border-4 border-white shadow-sm mb-4 object-cover"
-                  alt={profile.name}
-                />
-                <h3 className="text-2xl font-black text-gray-900 mb-1">
-                  {profile.name}
-                  {profile.age !== "-" && `, ${profile.age}`}
-                </h3>
-                <p className="text-sm text-gray-400 font-medium mb-6">
-                  Last active: {profile.lastActive}
-                </p>
-                <div className="flex flex-col w-full gap-3 mt-auto">
-                  <button
-                    onClick={() => openModal("PLAY_WARNING", profile)}
-                    className={`w-full ${THEME.primaryYellow} ${THEME.textBlack} font-bold py-3 rounded-full hover:bg-[#E5B427] transition-colors text-sm flex justify-center items-center gap-2`}
-                  >
-                    <Play size={16} fill="currentColor" /> Play Mode
-                  </button>
-                  <button
-                    onClick={() => {
-                      setActiveChild(profile);
-                      navigate("/loading", { state: { nextView: "/reports" } });
-                    }}
-                    className="w-full bg-gray-50 hover:bg-gray-100 text-gray-700 font-bold py-3 rounded-full transition-colors text-sm flex justify-center items-center gap-2"
-                  >
-                    <BarChart2 size={16} /> View Reports
-                  </button>
-                </div>
-              </div>
-            ))}
-            <div
-              onClick={() => openModal("LINK")}
-              className="border-2 border-dashed border-gray-200 bg-gray-50/50 rounded-[2rem] p-8 flex flex-col items-center justify-center text-center cursor-pointer hover:border-yellow-400 hover:bg-yellow-50/30 transition-all min-h-[300px]"
-            >
-              <div className="w-16 h-16 rounded-full bg-white flex items-center justify-center mb-4 text-gray-300 shadow-sm group-hover:scale-110 transition-transform">
-                <Plus size={24} strokeWidth={3} />
-              </div>
-              <h3 className="text-xl font-bold text-gray-700">Link Profile</h3>
-              <p className="text-sm text-gray-400 font-medium mt-1">
-                Connect a read-only child profile
-              </p>
-            </div>
-          </div>
-        </section>
-      </main>
+      </section>
 
       {/* Modals Overlay */}
       {activeModal && (
@@ -518,7 +514,7 @@ const ParentDashboard = () => {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 };
 

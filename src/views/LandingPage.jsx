@@ -51,7 +51,7 @@ const LandingPage = () => {
         >
           {isLoggedIn ? (
             <button
-              onClick={() => navigate("/parent-dashboard")}
+              onClick={() => navigate("/parent/dashboard")}
               className={`${THEME.primaryYellow} px-6 py-2.5 rounded-full font-bold shadow-sm  transition-colors hover:bg-[#E5B427] text-black text-sm`}
             >
               Dashboard
