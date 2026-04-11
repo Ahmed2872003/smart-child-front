@@ -2,10 +2,9 @@ import SocialLogin from "@/components/auth/SocialLogin";
 import InputField from "@/components/common/InputField";
 import { THEME } from "@/constants/config";
 import { Lock, Mail, User } from "lucide-react";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useSignup } from "@/hooks/Auth";
+import { useSignup } from "@/hooks/auth";
 import { emailPattern, namePattern } from "@/constants/pattern";
 
 const Register = () => {

@@ -1,4 +1,4 @@
-import { useVerifyEmail } from "@/hooks/Auth";
+import { useVerifyEmail } from "@/hooks/auth";
 import { Mail } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";

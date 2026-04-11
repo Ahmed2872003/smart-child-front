@@ -2,6 +2,8 @@ import axios from "axios";
 
 import { toast } from "react-toastify";
 
+import authService from "@/services/authService";
+
 const apiBaseURL = import.meta.env.VITE_API_BASE_URL;
 
 const apiClient = axios.create({
@@ -17,7 +19,7 @@ apiClient.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("jwt");
     if (token) {
-      config.headers.Authorization = token;
+      config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
   },
@@ -49,7 +51,10 @@ apiClient.interceptors.response.use(
         );
         break;
       case 401:
-        toast.error("Session expired. Please log in again.");
+        if (localStorage.getItem("jwt")) {
+          toast.error("Session expired. Please log in again.");
+          authService.logout(4);
+        }
         break;
       case 403:
         toast.error(

@@ -6,7 +6,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 import { useForm } from "react-hook-form";
 
-import { useForgotPass } from "@/hooks/Auth";
+import { useForgotPass } from "@/hooks/auth";
 import { emailPattern } from "@/constants/pattern";
 
 const timeDuration = 60;

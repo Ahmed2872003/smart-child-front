@@ -6,44 +6,51 @@ import { toast } from "react-toastify";
 const useLogin = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const onAuthSuccess = useAuthSuccess();
 
   const loginMutation = useMutation({
     mutationFn: authService.login,
-    onSuccess: (data) => {
-      const {
-        data: { user },
-      } = data;
-
-      localStorage.setItem("jwt", data.token);
-
-      queryClient.setQueryData(["currentUser"], user);
-
-      navigate("/parent-dashboard");
-    },
+    onSuccess: (data) => onAuthSuccess(data, [`Hello ${data.data.user.name}!`]),
   });
 
   return loginMutation;
 };
 
 const useSignup = () => {
-  const navigate = useNavigate();
+  const onAuthSuccess = useAuthSuccess();
 
   const signupMutation = useMutation({
     mutationFn: authService.signup,
-    onSuccess: (data) => {
-      const {
-        data: { user },
-      } = data;
-
-      toast.success("Account created");
-
-      navigate("/verify-email", {
-        state: { email: user.email },
-      });
-    },
+    onSuccess: (data) =>
+      onAuthSuccess(data, [
+        "Account created successfully!",
+        "Please check your email to verify your account.",
+      ]),
   });
 
   return signupMutation;
+};
+
+const useAuthSuccess = () => {
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
+  const handleAuthSuccess = (data, successMessages) => {
+    const {
+      token,
+      data: { user },
+    } = data;
+
+    localStorage.setItem("jwt", token);
+
+    queryClient.setQueryData(["currentUser"], user);
+
+    for (let sucessMsg of successMessages) toast.success(sucessMsg);
+
+    navigate("/parent-dashboard");
+  };
+
+  return handleAuthSuccess;
 };
 
 const useForgotPass = () => {

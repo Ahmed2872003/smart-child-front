@@ -2,13 +2,16 @@ import { ASSETS } from "@/assets";
 import { FacebookIcon, InstagramIcon } from "@/components/common/BrandIcons";
 import { THEME } from "@/constants/config";
 import { useAppContext } from "@/context/AppContext";
+import { useGetUser } from "@/hooks/user";
 import { MessageCircle, Sun } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const LandingPage = () => {
   const navigate = useNavigate();
-  const { parentData } = useAppContext();
-  const isLoggedIn = !!parentData;
+
+  const userQuery = useGetUser();
+
+  const isLoggedIn = userQuery.isSuccess;
 
   return (
     <div
@@ -43,16 +46,18 @@ const LandingPage = () => {
             Assessments
           </a>
         </div>
-        <div className="flex gap-3 items-center">
+        <div
+          className={`flex gap-3 items-center min-w-[205px] justify-end ${userQuery.isLoading ? "opacity-0 pointer-events-none" : "opacity-100 pointer-events-auto"}`}
+        >
           {isLoggedIn ? (
             <button
               onClick={() => navigate("/parent-dashboard")}
-              className={`${THEME.primaryYellow} px-6 py-2.5 rounded-full font-bold shadow-sm hover:scale-105 transition-transform text-black text-sm`}
+              className={`${THEME.primaryYellow} px-6 py-2.5 rounded-full font-bold shadow-sm  transition-colors hover:bg-[#E5B427] text-black text-sm`}
             >
               Dashboard
             </button>
           ) : (
-            <>
+            <div className="flex gap-3">
               <button
                 onClick={() => navigate("/login")}
                 className="hidden sm:block px-6 py-2.5 rounded-full border-2 border-gray-200 hover:border-gray-300 font-bold text-gray-700 transition-all text-sm"
@@ -61,11 +66,11 @@ const LandingPage = () => {
               </button>
               <button
                 onClick={() => navigate("/register")}
-                className={`${THEME.primaryYellow} px-6 py-2.5 rounded-full font-bold shadow-sm hover:scale-105 transition-transform text-black text-sm`}
+                className={`${THEME.primaryYellow} px-6 py-2.5 rounded-full font-bold shadow-sm transition-colors hover:bg-[#E5B427]  text-black text-sm`}
               >
                 Sign Up
               </button>
-            </>
+            </div>
           )}
         </div>
       </nav>
@@ -82,12 +87,10 @@ const LandingPage = () => {
           </p>
           <div className="pt-4">
             <button
-              onClick={() =>
-                navigate(isLoggedIn ? "/parent-dashboard" : "/register")
-              }
-              className={`${THEME.primaryYellow} px-8 py-4 rounded-full font-black text-lg shadow-sm hover:scale-105 transition-transform text-gray-900`}
+              onClick={() => navigate("/register")}
+              className={`${isLoggedIn ? "hidden" : "block"} ${THEME.primaryYellow} px-8 py-4 rounded-full font-black text-lg shadow-sm hover:scale-105 transition-transform text-gray-900`}
             >
-              {isLoggedIn ? "Go to Dashboard" : "Get Started"}
+              Get Started
             </button>
           </div>
         </div>

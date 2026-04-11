@@ -4,7 +4,7 @@ import { Lock } from "lucide-react";
 import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
-import { useResetPass } from "@/hooks/Auth";
+import { useResetPass } from "@/hooks/auth";
 
 const ResetPassword = () => {
   const { token } = useParams();

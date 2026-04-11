@@ -26,6 +26,7 @@ import ResetPassword from "./views/Auth/ResetPassword";
 import authService from "@/services/authService.js";
 
 import { ToastContainer } from "react-toastify";
+import { NotFoundPage } from "./views/NotFoundPage";
 
 const basename = import.meta.env.VITE_URL_BASENAME;
 
@@ -50,7 +51,7 @@ export default function App() {
             <Route path="/loading" element={<GamifiedLoader delay={2500} />} />
             <Route path="/game" element={<GamePlay />} />
             <Route path="/reports" element={<ReportsDashboard />} />
-
+            {/* Auth Routes */}
             <Route element={<AuthLayoutWrapper />}>
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
@@ -62,6 +63,7 @@ export default function App() {
                 element={<ResetPassword />}
               />
             </Route>
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </Router>
         <ToastContainer position="top-right" autoClose={3000} />

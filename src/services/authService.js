@@ -1,9 +1,15 @@
 import apiClient from "@/api/apiClient.js";
 
-const authStartEndpoint = "users";
+const authStartEndpoint = "auth";
 
 const login = async (data) => {
   return apiClient.post(`${authStartEndpoint}/login`, data);
+};
+
+const logout = (delayTimeSec = 0) => {
+  localStorage.removeItem("jwt");
+
+  setTimeout(() => (window.location.href = "/login"), delayTimeSec * 1000);
 };
 
 const signup = async (data) => {
@@ -32,6 +38,7 @@ const confirmEmail = async (token) => {
 
 export default {
   login,
+  logout,
   signup,
   forgotPass,
   resetPass,

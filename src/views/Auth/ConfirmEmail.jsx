@@ -1,4 +1,4 @@
-import { useConfirmEmail } from "@/hooks/Auth";
+import { useConfirmEmail } from "@/hooks/auth";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 

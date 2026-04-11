@@ -6,7 +6,7 @@ import { Lock, Mail } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
-import { useLogin } from "@/hooks/Auth";
+import { useLogin } from "@/hooks/auth";
 import { emailPattern } from "@/constants/pattern";
 
 const Login = () => {
@@ -19,8 +19,6 @@ const Login = () => {
     getValues: getFormData,
     formState: { errors },
   } = useForm();
-
-  console.log(errors.email?.message);
 
   const handleLogin = (data) => {
     login.mutate(data);

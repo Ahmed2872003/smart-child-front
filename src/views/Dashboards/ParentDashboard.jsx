@@ -1,8 +1,10 @@
 import { ASSETS, PREDEFINED_AVATARS } from "@/assets";
 import InputField from "@/components/common/InputField";
+import { ParentDashboardHeader } from "@/components/common/ParentDashboardHeader";
 import SelectField from "@/components/common/SelectField";
 import { THEME } from "@/constants/config";
 import { useAppContext } from "@/context/AppContext";
+import authService from "@/services/authService";
 import {
   BarChart2,
   Calendar,
@@ -22,10 +24,11 @@ import {
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { toast } from "react-toastify";
+
 const ParentDashboard = () => {
   const navigate = useNavigate();
-  const { profiles, setProfiles, setActiveChild, setParentData } =
-    useAppContext();
+  const { profiles, setProfiles, setActiveChild } = useAppContext();
   const [activeModal, setActiveModal] = useState(null);
   const [selectedProfileId, setSelectedProfileId] = useState(null);
   const [avatarUrl, setAvatarUrl] = useState(PREDEFINED_AVATARS[0]);
@@ -36,13 +39,7 @@ const ParentDashboard = () => {
     code: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [toast, setToast] = useState(null);
   const fileInputRef = useRef(null);
-
-  const showToast = (message, type = "success") => {
-    setToast({ message, type });
-    setTimeout(() => setToast(null), 3500);
-  };
 
   const openModal = (type, profile = null) => {
     setActiveModal(type);
@@ -99,7 +96,7 @@ const ParentDashboard = () => {
           lastActive: "Just now",
         };
         setProfiles([...profiles, newProfile]);
-        showToast("Profile created successfully!");
+        toast.success("Profile created successfully!");
       } else if (activeModal === "EDIT") {
         setProfiles(
           profiles.map((p) =>
@@ -114,7 +111,7 @@ const ParentDashboard = () => {
               : p,
           ),
         );
-        showToast("Profile updated successfully!");
+        toast.success("Profile updated successfully!");
       } else if (activeModal === "LINK") {
         if (!formData.code || formData.code.trim().length < 5)
           throw new Error("Invalid connection code. Please try again.");
@@ -128,11 +125,11 @@ const ParentDashboard = () => {
           lastActive: "Unknown",
         };
         setProfiles([...profiles, linkedProfile]);
-        showToast("Profile linked successfully!");
+        toast.success("Profile linked successfully!");
       }
       closeModal();
     } catch (error) {
-      showToast(error.message, "error");
+      toast.error(error.message);
     } finally {
       setIsSubmitting(false);
     }
@@ -142,7 +139,7 @@ const ParentDashboard = () => {
     setIsSubmitting(true);
     await new Promise((resolve) => setTimeout(resolve, 1500));
     setProfiles(profiles.filter((p) => p.id !== selectedProfileId));
-    showToast("Profile deleted permanently.");
+    toast.success("Profile deleted permanently.");
     setIsSubmitting(false);
     closeModal();
   };
@@ -152,55 +149,7 @@ const ParentDashboard = () => {
 
   return (
     <div className={`min-h-screen ${THEME.bgBeige} relative`}>
-      {toast && (
-        <div
-          className={`fixed bottom-8 right-8 px-6 py-4 rounded-2xl shadow-xl flex items-center gap-3 animate-in slide-in-from-bottom-5 z-[100] ${toast.type === "error" ? "bg-red-50 text-red-600 border border-red-200" : "bg-green-50 text-green-700 border border-green-200"}`}
-        >
-          {toast.type === "error" ? (
-            <Shield size={20} />
-          ) : (
-            <Star size={20} className="fill-green-600" />
-          )}
-          <span className="font-bold">{toast.message}</span>
-        </div>
-      )}
-
-      <header className="bg-[#FFFDF8]  flex items-center justify-between  top-0  px-6 md:px-12 py-6 max-w-7xl mx-auto sticky z-50">
-        <img className="w-16 " src={ASSETS.logo} alt="smart-child-logo" />
-        <div className="flex items-center gap-5">
-          <button
-            onClick={() => navigate("/")}
-            className="text-gray-500 hover:text-gray-900 transition-colors font-bold text-sm hidden sm:block"
-          >
-            Home
-          </button>
-          <button
-            onClick={() => navigate("/parent-dashboard")}
-            className="text-gray-900 font-bold text-sm hidden sm:block"
-          >
-            Dashboard
-          </button>
-          <div className="w-px h-6 bg-gray-200 hidden sm:block"></div>
-          <div
-            className="flex items-center gap-3 cursor-pointer"
-            onClick={() => {
-              setParentData(null);
-              setActiveChild(null);
-              navigate("/");
-            }}
-          >
-            <img
-              src={ASSETS.avatars.parent}
-              className="w-10 h-10 rounded-full bg-gray-100 border border-gray-200"
-              alt="Parent"
-            />
-            <LogOut
-              size={18}
-              className="text-gray-400 hover:text-black transition-colors"
-            />
-          </div>
-        </div>
-      </header>
+      <ParentDashboardHeader />
 
       <main className="max-w-5xl mx-auto p-6 md:p-10 space-y-12 animate-in fade-in duration-500">
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-4">
