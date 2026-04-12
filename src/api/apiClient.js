@@ -52,7 +52,7 @@ apiClient.interceptors.response.use(
         break;
       case 401:
         if (localStorage.getItem("jwt")) {
-          toast.error("Session expired. Please log in again.");
+          toast.error(serverMessage);
           authService.logout(4);
         }
         break;

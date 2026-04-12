@@ -10,7 +10,12 @@ const useLogin = () => {
 
   const loginMutation = useMutation({
     mutationFn: authService.login,
-    onSuccess: (data) => onAuthSuccess(data, [`Hello ${data.data.user.name}!`]),
+    onSuccess: (data) =>
+      onAuthSuccess(
+        data,
+        [`Hello ${data.data.user.name}!`],
+        "/parent/dashboard",
+      ),
   });
 
   return loginMutation;
@@ -22,10 +27,14 @@ const useSignup = () => {
   const signupMutation = useMutation({
     mutationFn: authService.signup,
     onSuccess: (data) =>
-      onAuthSuccess(data, [
-        "Account created successfully!",
-        "Please check your email to verify your account.",
-      ]),
+      onAuthSuccess(
+        data,
+        [
+          "Account created successfully!",
+          "Please check your email to verify your account.",
+        ],
+        "/parent/dashboard",
+      ),
   });
 
   return signupMutation;
@@ -35,7 +44,7 @@ const useAuthSuccess = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
-  const handleAuthSuccess = (data, successMessages) => {
+  const handleAuthSuccess = (data, successMessages, navigateTo = "") => {
     const {
       token,
       data: { user },
@@ -47,7 +56,7 @@ const useAuthSuccess = () => {
 
     for (let sucessMsg of successMessages) toast.success(sucessMsg);
 
-    navigate("/parent/dashboard");
+    if (navigateTo) navigate(navigateTo);
   };
 
   return handleAuthSuccess;
@@ -94,6 +103,15 @@ const useConfirmEmail = () => {
   return confirmEmailMutation;
 };
 
+const useChangePassword = () => {
+  const onAuthSuccess = useAuthSuccess();
+
+  return useMutation({
+    mutationFn: authService.updatePassword,
+    onSuccess: (data) => onAuthSuccess(data, ["Password is changed"]),
+  });
+};
+
 export {
   useLogin,
   useSignup,
@@ -101,4 +119,5 @@ export {
   useResetPass,
   useVerifyEmail,
   useConfirmEmail,
+  useChangePassword,
 };

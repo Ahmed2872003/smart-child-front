@@ -1,19 +1,29 @@
 import { Lock, ShieldCheck } from "lucide-react";
 import InputField from "../common/InputField";
 import { useForm } from "react-hook-form";
+import { useChangePassword } from "@/hooks/auth";
 
 const SecurityForm = () => {
+  const formDefaultValues = {
+    currentPassword: "",
+    newPassword: "",
+    newPasswordConfirm: "",
+  };
   const {
     register,
     handleSubmit,
     formState: { errors },
     getValues,
-  } = useForm();
+    reset,
+  } = useForm(formDefaultValues);
+
+  const changePass = useChangePassword();
 
   const handleUpdatePassSubmit = (formData) => {
-    console.log(formData);
-
-    // API Call To Update Password Goes Here
+    changePass
+      .mutateAsync(formData)
+      .then(() => reset())
+      .catch((e) => {});
   };
 
   const isMatch = (pass, confirmPass) => pass === confirmPass;
@@ -69,6 +79,7 @@ const SecurityForm = () => {
 
         <button
           type="submit"
+          disabled={changePass.isPending}
           className="bg-slate-900 text-white font-bold py-4 px-10 rounded-full hover:bg-slate-800 transition-all active:scale-95"
         >
           Update Password

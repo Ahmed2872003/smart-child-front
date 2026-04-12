@@ -36,6 +36,9 @@ const confirmEmail = async (token) => {
   );
 };
 
+const updatePassword = async (data) => {
+  return apiClient.patch(`${authStartEndpoint}/password`, data);
+};
 export default {
   login,
   logout,
@@ -44,4 +47,5 @@ export default {
   resetPass,
   verifyEmail,
   confirmEmail,
+  updatePassword,
 };
