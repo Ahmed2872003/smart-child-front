@@ -40,9 +40,8 @@ const Register = () => {
           {...register("name", {
             required: "required",
             pattern: {
-              value: namePattern,
-              message:
-                "- Starts with a letter\n- Only letters and _\n- No double spaces",
+              value: namePattern.pattern,
+              message: namePattern.description,
             },
           })}
           error={formErrors.name?.message}
@@ -54,8 +53,8 @@ const Register = () => {
           {...register("email", {
             required: "required",
             pattern: {
-              value: emailPattern,
-              message: "Enter a valid email address",
+              value: emailPattern.pattern,
+              message: `Enter a valid email address.\n${emailPattern.description}`,
             },
           })}
           error={formErrors.email?.message}

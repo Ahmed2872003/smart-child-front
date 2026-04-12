@@ -1,7 +1,6 @@
 import { ASSETS } from "@/assets";
 import { FacebookIcon, InstagramIcon } from "@/components/common/BrandIcons";
 import { THEME } from "@/constants/config";
-import { useAppContext } from "@/context/AppContext";
 import { useGetUser } from "@/hooks/user";
 import { MessageCircle, Sun } from "lucide-react";
 import { useNavigate } from "react-router-dom";
@@ -9,7 +8,9 @@ import { useNavigate } from "react-router-dom";
 const LandingPage = () => {
   const navigate = useNavigate();
 
-  const userQuery = useGetUser();
+  const userQuery = useGetUser({
+    refetchOnUnVerified: false,
+  });
 
   const isLoggedIn = userQuery.isSuccess;
 

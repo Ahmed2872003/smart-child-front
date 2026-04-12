@@ -34,7 +34,7 @@ apiClient.interceptors.response.use(
     if (error.config?.silent_error) return Promise.reject(error);
 
     if (!error.response) {
-      toast.error("Network error. Please check your connection.");
+      toast.error(error.message);
       return Promise.reject(error);
     }
 
